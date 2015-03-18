@@ -1,0 +1,28 @@
+\documentclass{article}
+
+\begin{document}
+<<echo=FALSE, warning=FALSE>>=
+#install.packages("rvest", repos="http://cran.us.r-project.org")
+#library("rvest")
+
+tablenumber <- 2;
+address <- rvest::html("http://en.wikipedia.org/wiki/Ebola_virus_epidemic_in_West_Africa")
+dataframe.ebola <- rvest::html_table(rvest::html_nodes(address, "table")[[tablenumber]])
+##Country(dataframe.ebola)
+case <- dataframe.ebola[1:9,"Cases"]
+death <- dataframe.ebola[1:9,"Deaths"]
+Case <- as.numeric(gsub(",","",case))
+Death <- as.numeric(gsub(",","",death))
+sumofcase <- sum(Case)
+sumofdeath <- sum(Death)
+
+#USA ebola cases and deaths
+usCases <- dataframe.ebola[6,"Cases"]
+usDeaths <- dataframe.ebola[6,"Deaths"]
+USCases <- as.numeric(gsub(",","",usCases))
+USDeaths <- as.numeric(gsub(",","",usDeaths))
+@
+
+The World Health Organization (WHO) and respective governments have reported a total of \(\Sexpr{sumofcase}\) suspected cases and \(\Sexpr{sumofdeath}\) deaths, though the WHO believes that this substantially understates the magnitude of the outbreak. In the United States there has been \(\Sexpr{USCases}\) reported cases and \(\Sexpr{USDeaths}\) deaths.
+
+\end{document}
