@@ -1,0 +1,26 @@
+<html>
+
+<head>
+<title>Title</title>
+</head>
+
+<body>
+
+<!--begin.rcode chunk-1
+library("rvest")
+
+URL <- html("http://en.wikipedia.org/wiki/List_of_people_who_died_climbing_Mount_Everest")
+df <- html_table(html_nodes(URL, "table")[[1]],fill=TRUE)
+
+mon <- months(as.Date(df[,2]))
+counts <- table(mon)
+
+library("ggplot2")
+ggplot(data=df, aes(x=mon,fill=mon)) + geom_bar(stat="bin")
+
+
+
+end.rcode-->
+
+</body>
+</html>
